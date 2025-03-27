@@ -91,9 +91,6 @@ namespace AirBladderUpgrades
                 var tempstorage = heldtool.gameObject.GetComponent<StorageContainer>();
                 if (tempstorage == null)
                 {
-                    tempstorage.container.onAddItem -= OnItemAdded;
-                    tempstorage.container.onAddItem += OnItemAdded;
-                    subscribed = false;
                     return;
                 }
                 if (!subscribed)
