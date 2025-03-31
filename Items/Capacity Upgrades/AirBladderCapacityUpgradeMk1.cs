@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace AirBladderUpgrades.Items.Capacity_Upgrades
 {
-    public class AirBladderCapacityUpgradeMk1
+    public class AirBladderCapacityUpgradeMk1 //all of these are nearly the same, just some name changes and very little behavior. let me know if i should change mk1, mk2, or 3.
     {
         public static CustomPrefab mk1capacityprefab;
         public static PrefabInfo mk1capacityprefabinfo;
