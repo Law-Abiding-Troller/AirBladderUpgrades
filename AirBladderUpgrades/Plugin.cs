@@ -67,8 +67,9 @@ namespace AirBladderUpgrades
             if (item.item.GetTechType() == TechType.Bleach) //give the ability to use the air bladder back to the player
             {
                 Logger.LogInfo("Bleach has been removed from the storage container. The player is safe.");
+                ErrorMessage.AddMessage("Bleach has been removed. You are now allowed to intake Oxygen.");
                 currentcapacity = 1f;
-                AirBladderPatches.actually0 = false;
+                AirBladderPatches.Actually0 = false;
             }
             //reduce the capacity when the mk1 upgrade is removed, check if it has been already upgraded, let me know if it should cause issues on reload
             if (item.item.GetTechType() == AirBladderCapacityUpgradeMk1.mk1capacityprefabinfo.TechType && upgraded)
@@ -100,8 +101,9 @@ namespace AirBladderUpgrades
             if (item.item.GetTechType() == TechType.Bleach)
             {
                 Logger.LogInfo("Bleach has been added to the storage container! The player is going to die if they inhale it!");
+                ErrorMessage.AddWarning("Bleach has been added! You are no longer allowed to intake oxygen.");
                 currentcapacity = 0;
-                AirBladderPatches.actually0 = true;
+                AirBladderPatches.Actually0 = true;
             }
             //increase for the mk1 to go into the patches
             if (item.item.GetTechType() == AirBladderCapacityUpgradeMk1.mk1capacityprefabinfo.TechType && !upgraded)
@@ -115,7 +117,7 @@ namespace AirBladderUpgrades
                 currentcapacity = 4f;
                 upgraded = true;
             }
-            //ame as mk 2, but even more
+            //same as mk 2, but even more
             if (item.item.GetTechType() == AirBladderCapacityUpgradeMk3.mk3capacityprefabinfo.TechType && !upgraded)
             {
                 currentcapacity = 7f;

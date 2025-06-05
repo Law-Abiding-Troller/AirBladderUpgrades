@@ -2,7 +2,6 @@
 using Nautilus.Assets;
 using Nautilus.Assets.Gadgets;
 using Nautilus.Assets.PrefabTemplates;
-using UnityEngine;
 using UpgradesLIB.Items.Equipment;
 
 namespace AirBladderUpgrades.Items.Capacity_Upgrades
@@ -23,8 +22,9 @@ namespace AirBladderUpgrades.Items.Capacity_Upgrades
                 craftAmount = 1,
                 Ingredients = new List<CraftData.Ingredient>()
                 {
-                    new CraftData.Ingredient(TechType.Battery, 1),
-                    new CraftData.Ingredient(TechType.WiringKit, 1)
+                    new (TechType.Gold),
+                    new (TechType.Titanium),
+                    new (AirBladderCapacityUpgradeMk2.mk2capacityprefabinfo.TechType)
                 }
             })
             .WithFabricatorType(Handheldprefab.HandheldfabTreeType)

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AirBladderUpgrades;
+﻿using System.Collections.Generic;
 using Nautilus.Assets;
 using Nautilus.Assets.Gadgets;
 using Nautilus.Assets.PrefabTemplates;
-using UnityEngine;
 using UpgradesLIB.Items.Equipment;
 
 namespace AirBladderUpgrades.Items.Capacity_Upgrades
@@ -28,8 +22,8 @@ namespace AirBladderUpgrades.Items.Capacity_Upgrades
                 craftAmount = 1,
                 Ingredients = new List<CraftData.Ingredient>()
                 {
-                    new CraftData.Ingredient(TechType.Battery, 1),
-                    new CraftData.Ingredient(TechType.WiringKit, 1)
+                    new (TechType.Battery),
+                    new (TechType.Silicone)
                 }
             })
             .WithFabricatorType(Handheldprefab.HandheldfabTreeType)
