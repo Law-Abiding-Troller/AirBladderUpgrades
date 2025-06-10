@@ -35,6 +35,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;copy /Y &quot;C:\Users\Colt\Documents\AirBladderUpgradesSolution\AirBladderUpgrades\bin\Debug\net472\AirBladderUpgrades.pdb&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;" />
+    <Exec Command="copy /Y &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;copy /Y &quot;C:\Users\Colt\RiderProjects\AirBladderUpgrades\AirBladderUpgrades\bin\Debug\net472\AirBladderUpgrades.pdb&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;" />
   </Target>
 </Project>

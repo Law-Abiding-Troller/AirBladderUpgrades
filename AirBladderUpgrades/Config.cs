@@ -16,7 +16,7 @@ namespace AirBladderUpgrades
         [Keybind("Open Upgrades Container Key"), OnChange(nameof(KeyBindChangeEvent))]
         public KeyCode OpenUpgradesContainerKey = KeyCode.N;
 
-        public static KeyCode UpgradesContainerKey;
+        public static KeyCode UpgradesContainerKey = KeyCode.N;
         public void KeyBindChangeEvent(KeybindChangedEventArgs newbind)
         {
             UpgradesContainerKey = newbind.Value;
