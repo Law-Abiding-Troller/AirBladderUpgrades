@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AirBladderUpgrades")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b898e9a67403cd52825148a141e630b0ddefe753")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f31776b7ccb3794f6742366e5d8f68c1a211132")]
 [assembly: System.Reflection.AssemblyProductAttribute("AirBladderUpgrades")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AirBladderUpgrades")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
