@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AirBladderUpgrades.Items.Capacity_Upgrades;
+using HarmonyLib;
 using UnityEngine;
 
 namespace AirBladderUpgrades
@@ -6,7 +7,6 @@ namespace AirBladderUpgrades
     [HarmonyPatch(typeof(AirBladder))] //patch the air bladder
     public class AirBladderPatches
     {
-        static bool _collectedDefaultValues;
         static float _capacityDefaultValue;
         public static bool Actually0;
 
@@ -20,9 +20,12 @@ namespace AirBladderUpgrades
             tempstorage.container.onAddItem += Plugin.OnItemAdded;
             tempstorage.container.onRemoveItem += Plugin.OnItemRemoved;
             tempstorage.container._label = "AIR BLADDER";
-            if (_collectedDefaultValues) return;
             _capacityDefaultValue = __instance.oxygenCapacity;
-            _collectedDefaultValues = true;
+            var allowedtech = new TechType[4]
+            {
+                TechType.Bleach, AirBladderCapacityUpgradeMk1.mk1capacityprefabinfo.TechType, AirBladderCapacityUpgradeMk2.mk2capacityprefabinfo.TechType, AirBladderCapacityUpgradeMk3.mk3capacityprefabinfo.TechType,
+            };
+            tempstorage.container.SetAllowedTechTypes(allowedtech);
         }
 
         [HarmonyPatch(nameof(AirBladder.Update))]
@@ -88,6 +91,7 @@ namespace AirBladderUpgrades
             if (tempstorage == null) return;
             tempstorage.container.onAddItem -= Plugin.OnItemAdded;
             tempstorage.container.onRemoveItem -= Plugin.OnItemRemoved;
+            __instance.oxygenCapacity = _capacityDefaultValue;
         }
     }
 }

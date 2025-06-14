@@ -17,7 +17,12 @@ using UpgradesLIB.Items.Equipment;
 
 namespace AirBladderUpgrades
 {
-    [BepInPlugin("com.lawabidingtroller.airbladderupgrades", "AirBladderUpgrades", "0.0.3")]//next version to release
+    /*
+     * Todo List:
+     * Remove unnecessary methods in Plugin.cs (move to other classes)
+     * Improve code to look nicer
+     */
+    [BepInPlugin("com.lawabidingtroller.airbladderupgrades", "AirBladderUpgrades", "0.1.0")]//next version to release
     [BepInDependency("com.snmodding.nautilus")]
     [BepInDependency("com.lawabidingmodder.upgradeslib")]
     public class Plugin : BaseUnityPlugin
