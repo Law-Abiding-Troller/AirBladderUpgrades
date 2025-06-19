@@ -1,4 +1,5 @@
-﻿using AirBladderUpgrades.Items.Capacity_Upgrades;
+﻿using System.Collections.Generic;
+using AirBladderUpgrades.Items.Capacity_Upgrades;
 using HarmonyLib;
 using UnityEngine;
 
@@ -7,25 +8,22 @@ namespace AirBladderUpgrades
     [HarmonyPatch(typeof(AirBladder))] //patch the air bladder
     public class AirBladderPatches
     {
-        static float _capacityDefaultValue;
-        public static bool Actually0;
-
         [HarmonyPatch(nameof(AirBladder.Awake))]
-        [HarmonyPrefix]
-        public static void Awake_Prefix(AirBladder __instance)
+        [HarmonyPostfix]
+        public static void Awake_Postfix(AirBladder __instance)
         {
             if (__instance == null) return; 
             var tempstorage = __instance.GetComponent<StorageContainer>();
             if (tempstorage == null) return;
-            tempstorage.container.onAddItem += Plugin.OnItemAdded;
-            tempstorage.container.onRemoveItem += Plugin.OnItemRemoved;
             tempstorage.container._label = "AIR BLADDER";
-            _capacityDefaultValue = __instance.oxygenCapacity;
             var allowedtech = new TechType[4]
             {
-                TechType.Bleach, AirBladderCapacityUpgradeMk1.mk1capacityprefabinfo.TechType, AirBladderCapacityUpgradeMk2.mk2capacityprefabinfo.TechType, AirBladderCapacityUpgradeMk3.mk3capacityprefabinfo.TechType,
+                TechType.Bleach, AirBladderCapacityUpgradeMk1.mk1capacityprefabinfo.TechType,
+                AirBladderCapacityUpgradeMk2.mk2capacityprefabinfo.TechType, 
+                AirBladderCapacityUpgradeMk3.mk3capacityprefabinfo.TechType,
             };
             tempstorage.container.SetAllowedTechTypes(allowedtech);
+            
         }
 
         [HarmonyPatch(nameof(AirBladder.Update))]
@@ -40,7 +38,6 @@ namespace AirBladderUpgrades
                 Plugin.Logger.LogInfo("Open Storage Container Key pressed for Air Bladder!");
                 if (tempstorage.open) //check if its already open
                 {
-                    Plugin.Logger.LogInfo("The storage container for the Air Bladder is open! Close it to open it!");
                     ErrorMessage.AddMessage("Close 'AIR BLADDER' to open it!"); 
                     return;
                 }
@@ -54,44 +51,72 @@ namespace AirBladderUpgrades
         {
 
             if (__instance == null) return; //check if the instance is null
-            if (!Actually0)//check if is null or is actually 0 in plugin.
+            var capacity = UpgradeData.GetCapacity(__instance, out var bleach);
+            if (!bleach && __instance.oxygenCapacity == 0)
             {
-                __instance.oxygenCapacity = _capacityDefaultValue;  
+                __instance.oxygenCapacity = 5f;
             }
-            __instance.oxygenCapacity *= Plugin.currentcapacity; //change the o2
-            
-            Plugin.currentcapacity = 0;//so it doesn't do it again until an item is removed or added
-        }
-
-        [HarmonyPatch(nameof(AirBladder.OnDraw))]
-        [HarmonyPostfix]
-        public static void OnDraw_Postfix(AirBladder __instance)//kept just for good measure
-        {
-            if (__instance == null)
-            {
-                return;
-            }
-            
-        }
-
-        [HarmonyPatch(nameof(AirBladder.OnHolster))]
-        [HarmonyPostfix]
-        public static void OnHolster_Postfix(AirBladder __instance)//kept just for good measure
-        {
-            if (__instance == null) return;
-            
+            __instance.oxygenCapacity *= capacity;
         }
 
         [HarmonyPatch(nameof(AirBladder.OnDestroy))]
         [HarmonyPostfix]
         public static void OnDestroy_Postfix(AirBladder __instance)
         {
-            __instance.oxygenCapacity = _capacityDefaultValue;
-            var tempstorage = __instance.GetComponent<StorageContainer>();
-            if (tempstorage == null) return;
-            tempstorage.container.onAddItem -= Plugin.OnItemAdded;
-            tempstorage.container.onRemoveItem -= Plugin.OnItemRemoved;
-            __instance.oxygenCapacity = _capacityDefaultValue;
+            __instance.oxygenCapacity = 5f;
+        }
+    }
+
+    public class UpgradeData
+    {
+        public static Dictionary<TechType, UpgradeData> upgradedata = new Dictionary<TechType, UpgradeData>();
+        
+        public float CapacityMultiplier;
+
+        public UpgradeData(float capacityMultiplier = 0)
+        {
+            
+        }
+
+        public static float GetCapacity(AirBladder instance, out bool isBleach)
+        {
+            isBleach = false;
+            var tempstorage  = instance.GetComponent<StorageContainer>();
+            if (tempstorage == null)
+            {
+                Plugin.Logger.LogError("Failed to find the storage container for the Air Bladder! WTF Happened.");
+                isBleach = true;
+                return 0;
+            }
+
+            UpgradeData upgrade;
+            float highestcapacity = 0;
+            foreach (var item in tempstorage.container.GetItemTypes())
+            {
+                if (item == TechType.Bleach)
+                {
+                    ErrorMessage.AddWarning("The Air Bladder's ability to do work has been removed to protect you. And the environment");
+                    isBleach = true;
+                    break;
+                }
+                if (!upgradedata.TryGetValue(item, out upgrade))
+                {
+                    Plugin.Logger.LogError($"Failed to find the upgrade data for: {item}!");
+                    continue;
+                }
+                highestcapacity = Mathf.Max(highestcapacity, upgrade.CapacityMultiplier);
+            }
+            return highestcapacity;
+        }
+    }
+
+    public class AirBladderData
+    {
+        public float DefaultCapcity;
+
+        public AirBladderData(float defaultCapcity)
+        {
+            DefaultCapcity = defaultCapcity;
         }
     }
 }

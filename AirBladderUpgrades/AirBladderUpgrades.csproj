@@ -30,11 +30,13 @@
 
   <ItemGroup>
     <Reference Include="UpgradesLIB">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\ToolsUpgradesLIB\UpgradesLIB.dll</HintPath>
+      <HintPath>/Users/coltwiedermann/Library/Application Support/Steam/steamapps/common/Subnautica/BepInEx/plugins/ToolsUpgradesLIB/UpgradesLIB.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;copy /Y &quot;C:\Users\Colt\RiderProjects\AirBladderUpgrades\AirBladderUpgrades\bin\Debug\net472\AirBladderUpgrades.pdb&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Subnautica\BepInEx\plugins\AirBladderUpgrades&quot;&#xA;" />
-  </Target>
+  <ItemDefinitionGroup>
+    <PackageReference ExcludeAssets="runtime"/>
+    <Reference>
+      <Private>false</Private>
+    </Reference>
+  </ItemDefinitionGroup>
 </Project>

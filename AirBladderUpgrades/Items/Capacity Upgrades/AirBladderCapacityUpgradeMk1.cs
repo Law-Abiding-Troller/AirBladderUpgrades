@@ -14,6 +14,8 @@ namespace AirBladderUpgrades.Items.Capacity_Upgrades
         public static void Register()
         {
             mk1capacityprefabinfo = PrefabInfo.WithTechType("AirBladderCapacityUpgradeMk1", "Air Bladder Capacity Upgrade Mk 1", "Mk 1 Capacity for the Air Bladder. Doubles the Oxygen Capacity in the Air Bladder").WithIcon(SpriteManager.Get(TechType.AirBladder));
+            var upgradedata = new UpgradeData(2);
+            UpgradeData.upgradedata.Add(mk1capacityprefabinfo.TechType, upgradedata);
             mk1capacityprefab = new CustomPrefab(mk1capacityprefabinfo);
             var clone = new CloneTemplate(mk1capacityprefabinfo, techType);
             mk1capacityprefab.SetGameObject(clone);
